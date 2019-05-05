@@ -119,12 +119,20 @@ class Bot(object):
             for url in urls:
                 rt_seconds, rt_text = await self.get_reading_time(url)
                 if rt_text:
+                    log.info("Sending reading time: {} secs, url=`{}`".format(
+                        rt_seconds,
+                        url
+                    ))
                     await self.slacker.chat.post_message(
                         message["channel"],
                         "Reading time: {}".format(rt_text),
                         as_user=True,
                     )
                 if rt_seconds > TLDR_LIMIT_SECS:
+                    log.info("TLDR: {} secs, url=`{}`".format(
+                        rt_seconds,
+                        url
+                    ))
                     await self.slacker.chat.post_message(
                         message["channel"], random.choice(TLDR_RESPONSES), as_user=True
                     )
