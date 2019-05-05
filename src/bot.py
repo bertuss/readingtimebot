@@ -161,6 +161,10 @@ class Bot(object):
             result = readtime.of_text(full_text)
 
             if result.seconds <= RESPONSE_LIMIT_SECS:
+                log.info("Article reading time under limit: {} secs, url=`{}`".format(
+                    result.seconds,
+                    url
+                ))
                 return 0, None
 
             return result.seconds, result.text
