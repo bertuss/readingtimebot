@@ -15,8 +15,8 @@ import websockets
 from aioslacker import Slacker
 
 
-log = logging.StreamHandler(sys.stdout)
-log.setLevel(logging.INFO)
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+log = logging.getLogger(__name__)
 
 
 URL_REGEX = re.compile(
