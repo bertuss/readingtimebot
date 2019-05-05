@@ -15,6 +15,7 @@ from aioslacker import Slacker
 
 
 log = logging.getLogger(__name__)
+log.setLevel(logging.INFO)
 
 
 URL_REGEX = re.compile(
