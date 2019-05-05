@@ -1,0 +1,7 @@
+aioslacker
+readtime
+justext
+websockets
+aiohttp
+cchardet
+aiodns
