@@ -4,6 +4,7 @@ import logging
 import os
 import random
 import re
+import sys
 
 import aiohttp
 import justext
@@ -14,7 +15,7 @@ import websockets
 from aioslacker import Slacker
 
 
-log = logging.getLogger(__name__)
+log = logging.StreamHandler(sys.stdout)
 log.setLevel(logging.INFO)
 
 
