@@ -8,18 +8,21 @@ from aiohttp import ClientSession, web
 
 log = logging.getLogger(__name__)
 
+
 async def handle(request):
     try:
         params = {
             "code": request.query.get("code"),
             "client_id": os.getenv("CLIENT_ID"),
             "client_secret": os.getenv("CLIENT_SECRET"),
-            "redirect_uri": os.getenv("REDIRECT_URI")
+            "redirect_uri": os.getenv("REDIRECT_URI"),
         }
 
         log.warning(params)
 
-        data = requests.get(url="https://slack.com/api/oauth.access", params=params).json() 
+        data = requests.get(
+            url="https://slack.com/api/oauth.access", params=params
+        ).json()
 
         log.warning(data)
 
@@ -42,7 +45,7 @@ async def handle(request):
             return web.json_response({"success": False, "error": data["error"]})
 
     except Exception as exc:
-        print(exc)
+        log.info(exc)
 
 
 async def handle_root(request):
@@ -50,15 +53,9 @@ async def handle_root(request):
 
 
 app = web.Application()
-app.add_routes([
-    web.get('/', handle_root),
-    web.get('/auth/redirect', handle),
-])
+app.add_routes([web.get("/", handle_root), web.get("/auth/redirect", handle)])
 
 ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-ssl_context.load_cert_chain(
-    os.getenv("CERT_FILE"),
-    os.getenv("KEY_FILE")
-)
+ssl_context.load_cert_chain(os.getenv("CERT_FILE"), os.getenv("KEY_FILE"))
 
 web.run_app(app, ssl_context=ssl_context)
