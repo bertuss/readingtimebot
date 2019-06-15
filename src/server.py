@@ -6,6 +6,7 @@ import ssl
 import requests
 from aiohttp import ClientSession, web
 
+
 log = logging.getLogger(__name__)
 
 
@@ -18,28 +19,11 @@ async def handle(request):
             "redirect_uri": os.getenv("REDIRECT_URI"),
         }
 
-        log.warning(params)
-
         data = requests.get(
             url="https://slack.com/api/oauth.access", params=params
         ).json()
 
-        log.warning(data)
-
         if data["ok"]:
-            # {
-            #     "user_id": "",
-            #     "ok": true,
-            #     "team_name": "",
-            #     "scope": "identify,bot",
-            #     "team_id": "",
-            #     "bot": {
-            #         "bot_user_id": "",
-            #         "bot_access_token": "."
-            #     },
-            #     "access_token": "."
-            # }
-
             return web.json_response({"success": True})
         else:
             return web.json_response({"success": False, "error": data["error"]})
