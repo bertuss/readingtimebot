@@ -39,7 +39,4 @@ async def handle_root(request):
 app = web.Application()
 app.add_routes([web.get("/", handle_root), web.get("/auth/redirect", handle)])
 
-ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-ssl_context.load_cert_chain(os.getenv("CERT_FILE"), os.getenv("KEY_FILE"))
-
-web.run_app(app, ssl_context=ssl_context)
+web.run_app(app)

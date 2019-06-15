@@ -1,0 +1,12 @@
+version: 3
+services:
+  server:
+    build: .
+    restart: unless-stopped
+    ports:
+    - "80:80"
+    - "443:443"
+    command: "python -u /app/server.py"
+  bot:
+    build: .
+    restart: unless-stopped
